@@ -41,6 +41,7 @@ public final class ExoPlayerView extends FrameLayout {
     private ViewGroup.LayoutParams layoutParams;
 
     private boolean useTextureView = true;
+    private boolean useSecureView = false;
     private boolean hideShutterView = false;
 
     public ExoPlayerView(Context context) {
@@ -103,7 +104,15 @@ public final class ExoPlayerView extends FrameLayout {
     }
 
     private void updateSurfaceView() {
-        View view = useTextureView ? new TextureView(context) : new SurfaceView(context);
+        View view;
+        if (!useTextureView || useSecureView) {
+            view = new SurfaceView(context);
+            if (useSecureView) {
+                ((SurfaceView)view).setSecure(true);
+            }
+        } else {
+            view = new TextureView(context);
+        }
         view.setLayoutParams(layoutParams);
 
         surfaceView = view;
@@ -139,7 +148,7 @@ public final class ExoPlayerView extends FrameLayout {
             clearVideoView();
         }
         this.player = player;
-        shutterView.setVisibility(VISIBLE);
+        shutterView.setVisibility(this.hideShutterView ? View.INVISIBLE : View.VISIBLE);
         if (player != null) {
             setVideoView();
             player.addVideoListener(componentListener);
@@ -178,6 +187,13 @@ public final class ExoPlayerView extends FrameLayout {
         }
     }
 
+    public void useSecureView(boolean useSecureView) {
+        if (useSecureView != this.useSecureView) {
+            this.useSecureView = useSecureView;
+            updateSurfaceView();
+        }
+    }
+
     public void setHideShutterView(boolean hideShutterView) {
         this.hideShutterView = hideShutterView;
         updateShutterViewVisibility();
@@ -206,7 +222,7 @@ public final class ExoPlayerView extends FrameLayout {
             }
         }
         // Video disabled so the shutter must be closed.
-        shutterView.setVisibility(VISIBLE);
+        shutterView.setVisibility(this.hideShutterView ? View.INVISIBLE : View.VISIBLE);
     }
 
     public void invalidateAspectRatio() {

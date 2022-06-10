@@ -1,7 +1,6 @@
-## react-native-video
+# react-native-video
 
-A `<Video>` component for react-native, as seen in
-[react-native-login](https://github.com/brentvatne/react-native-login)!
+#### A `<Video>` component for react-native.
 
 Version 5.x recommends react-native >= 0.60.0 for Android 64bit builds and Android X support.
 
@@ -31,6 +30,10 @@ Version 3.0 features a number of changes to existing behavior. See [Updating](#u
   * [Android](#android-installation)
   * [Windows](#windows-installation)
   * [react-native-dom](#react-native-dom-installation)
+* [Examples](#examples)
+  * [iOS](#ios-example)
+  * [Android](#android-example)
+  * [Windows](#windows-example)
 * [Usage](#usage)
 * [iOS App Transport Security](#ios-app-transport-security)
 * [Audio Mixing](#audio-mixing)
@@ -67,6 +70,12 @@ Run `npx pod-install`. Linking is not required in React Native 0.60 and above.
 
 Run `react-native link react-native-video` to link the react-native-video library.
 
+#### Enable Static Linking for dependencies in your ios project Podfile
+
+Add `use_frameworks! :linkage => :static` just under `platform :ios` in your ios project Podfile.
+
+[See the example ios project for reference](examples/basic/ios/Podfile#L5)
+
 #### Using CocoaPods (required to enable caching)
 
 Setup your Podfile like it is described in the [react-native documentation](https://facebook.github.io/react-native/docs/integration-with-existing-apps#configuring-cocoapods-dependencies). 
@@ -101,11 +110,11 @@ First select your project in Xcode.
 
 <img src="./docs/tvOS-step-1.jpg" width="40%">
 
-After that, select the tvOS target of your application and select « General » tab
+After that, select the tvOS target of your application and select « General » tab
 
 <img src="./docs/tvOS-step-2.jpg" width="40%">
 
-Scroll to « Linked Frameworks and Libraries » and tap on the + button
+Scroll to « Linked Frameworks and Libraries » and tap on the + button
 
 <img src="./docs/tvOS-step-3.jpg" width="40%">
 
@@ -163,6 +172,11 @@ android.enableJetifier=true
 ```
 
 #### **MainApplication.java**
+
+If using com.facebook.react.PackageList to auto import native dependencies, there are no updates required here. Please see the android example project for more details.
+/examples/basic/android/app/src/main/java/com/videoplayer/MainApplication.java
+
+##### For manual linking
 
 On top, where imports are:
 
@@ -255,6 +269,25 @@ const ReactNativeDomOptions = {
 ```
 </details>
 
+## Examples
+
+Run `yarn xbasic install` before running any of the examples.
+
+### iOS Example
+```
+yarn xbasic ios
+```
+
+### Android Example
+```
+yarn xbasic android
+```
+
+### Windows Example
+```
+yarn xbasic windows
+```
+
 ## Usage
 
 ```javascript
@@ -287,74 +320,89 @@ var styles = StyleSheet.create({
 ```
 
 ### Configurable props
-* [allowsExternalPlayback](#allowsexternalplayback)
-* [audioOnly](#audioonly)
-* [automaticallyWaitsToMinimizeStalling](#automaticallyWaitsToMinimizeStalling)
-* [bufferConfig](#bufferconfig)
-* [controls](#controls)
-* [currentPlaybackTime](#currentPlaybackTime)
-* [disableFocus](#disableFocus)
-* [filter](#filter)
-* [filterEnabled](#filterEnabled)
-* [fullscreen](#fullscreen)
-* [fullscreenAutorotate](#fullscreenautorotate)
-* [fullscreenOrientation](#fullscreenorientation)
-* [headers](#headers)
-* [hideShutterView](#hideshutterview)
-* [id](#id)
-* [ignoreSilentSwitch](#ignoresilentswitch)
-* [maxBitRate](#maxbitrate)
-* [minLoadRetryCount](#minLoadRetryCount)
-* [mixWithOthers](#mixWithOthers)
-* [muted](#muted)
-* [paused](#paused)
-* [pictureInPicture](#pictureinpicture)
-* [playInBackground](#playinbackground)
-* [playWhenInactive](#playwheninactive)
-* [poster](#poster)
-* [posterResizeMode](#posterresizemode)
-* [preferredForwardBufferDuration](#preferredForwardBufferDuration)
-* [preventsDisplaySleepDuringVideoPlayback](#preventsDisplaySleepDuringVideoPlayback)
-* [progressUpdateInterval](#progressupdateinterval)
-* [rate](#rate)
-* [repeat](#repeat)
-* [reportBandwidth](#reportbandwidth)
-* [resizeMode](#resizemode)
-* [selectedAudioTrack](#selectedaudiotrack)
-* [selectedTextTrack](#selectedtexttrack)
-* [selectedVideoTrack](#selectedvideotrack)
-* [source](#source)
-* [stereoPan](#stereopan)
-* [textTracks](#texttracks)
-* [trackId](#trackId)
-* [useTextureView](#usetextureview)
-* [volume](#volume)
+| Name |Plateforms Support  | 
+|--|--|
+|[allowsExternalPlayback](#allowsexternalplayback) |iOS |
+|[audioOnly](#audioonly)|All |
+|[automaticallyWaitsToMinimizeStalling](#automaticallyWaitsToMinimizeStalling) | iOS|\
+|[backBufferDurationMs](#backBufferDurationMs)| Android Exoplayer|
+|[bufferConfig](#bufferconfig)|Android ExoPlayer|
+|[contentStartTime](#contentStartTime)| Android Exoplayer|
+|[controls](#controls)|Android ExoPlayer, iOS, react-native-dom|
+|[currentPlaybackTime](#currentPlaybackTime)|Android Exoplayer|
+|[disableFocus](#disableFocus)|Android Exoplayer, iOS|
+|[disableDisconnectError](#disableDisconnectError)|Android Exoplayer|
+|[filter](#filter)|iOS|
+|[filterEnabled](#filterEnabled)|iOS|
+|[fullscreen](#fullscreen)|iOS|
+|[fullscreenAutorotate](#fullscreenautorotate)|iOS|
+|[fullscreenOrientation](#fullscreenorientation)|iOS|
+|[headers](#headers)|Android ExoPlayer|
+|[hideShutterView](#hideshutterview)|Android ExoPlayer|
+|[id](#id)|react-native-dom|
+|[ignoreSilentSwitch](#ignoresilentswitch)|iOS|
+|[maxBitRate](#maxbitrate)|Android ExoPlayer, iOS|
+|[minLoadRetryCount](#minLoadRetryCount)|Android ExoPlayer|
+|[mixWithOthers](#mixWithOthers)|iOS|
+|[muted](#muted)|All|
+|[paused](#paused)|All|
+|[pictureInPicture](#pictureinpicture)|iOS|
+|[playInBackground](#playinbackground)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[playWhenInactive](#playwheninactive)|iOS|
+|[poster](#poster)|All|
+|[posterResizeMode](#posterresizemode)|All|
+|[preferredForwardBufferDuration](#preferredForwardBufferDuration)|iOS|
+|[preventsDisplaySleepDuringVideoPlayback](#preventsDisplaySleepDuringVideoPlayback)|iOS, Android|
+|[progressUpdateInterval](#progressupdateinterval)|All|
+|[rate](#rate)|All|
+|[repeat](#repeat)|All|
+|[reportBandwidth](#reportbandwidth)|Android ExoPlayer|
+|[resizeMode](#resizemode)|Android ExoPlayer, Android MediaPlayer, iOS, Windows UWP|
+|[selectedAudioTrack](#selectedaudiotrack)|Android ExoPlayer, iOS|
+|[selectedTextTrack](#selectedtexttrack)|Android ExoPlayer, iOS|
+|[selectedVideoTrack](#selectedvideotrack)|Android ExoPlayer|
+|[source](#source)|All|
+|[stereoPan](#stereopan)|Android MediaPlayer|
+|[textTracks](#texttracks)|Android ExoPlayer, iOS|
+|[trackId](#trackId)|Android ExoPlayer|
+|[useTextureView](#usetextureview)|Android ExoPlayer|
+|[useSecureView](#useSecureView)|Android Exoplayer|
+|[volume](#volume)|All|
+|[localSourceEncryptionKeyScheme](#localSourceEncryptionKeyScheme)|All|
+
 
 ### Event props
-* [onAudioBecomingNoisy](#onaudiobecomingnoisy)
-* [onBandwidthUpdate](#onbandwidthupdate)
-* [onEnd](#onend)
-* [onExternalPlaybackChange](#onexternalplaybackchange)
-* [onFullscreenPlayerWillPresent](#onfullscreenplayerwillpresent)
-* [onFullscreenPlayerDidPresent](#onfullscreenplayerdidpresent)
-* [onFullscreenPlayerWillDismiss](#onfullscreenplayerwilldismiss)
-* [onFullscreenPlayerDidDismiss](#onfullscreenplayerdiddismiss)
-* [onLoad](#onload)
-* [onLoadStart](#onloadstart)
-* [onReadyForDisplay](#onreadyfordisplay)
-* [onPictureInPictureStatusChanged](#onpictureinpicturestatuschanged)
-* [onPlaybackRateChange](#onplaybackratechange)
-* [onProgress](#onprogress)
-* [onSeek](#onseek)
-* [onRestoreUserInterfaceForPictureInPictureStop](#onrestoreuserinterfaceforpictureinpicturestop)
-* [onTimedMetadata](#ontimedmetadata)
+| Name |Plateforms Support  | 
+|--|--|
+|[onAudioBecomingNoisy](#onaudiobecomingnoisy)|Android ExoPlayer, iOS|
+|[onBandwidthUpdate](#onbandwidthupdate)|Android ExoPlayer|
+|[onBuffer](#onbuffer)|Android ExoPlayer, iOS|
+|[onEnd](#onend)|All|
+|[onExternalPlaybackChange](#onexternalplaybackchange)|iOS|
+|[onFullscreenPlayerWillPresent](#onfullscreenplayerwillpresent)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[onFullscreenPlayerDidPresent](#onfullscreenplayerdidpresent)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[onFullscreenPlayerWillDismiss](#onfullscreenplayerwilldismiss)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[onFullscreenPlayerDidDismiss](#onfullscreenplayerdiddismiss)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[onLoad](#onload)|All|
+|[onLoadStart](#onloadstart)|All|
+|[onReadyForDisplay](#onreadyfordisplay)|Android ExoPlayer, Android MediaPlayer, iOS, Web|
+|[onPictureInPictureStatusChanged](#onpictureinpicturestatuschanged)|iOS|
+|[onPlaybackRateChange](#onplaybackratechange)|All|
+|[onProgress](#onprogress)|All|
+|[onSeek](#onseek)|Android ExoPlayer, Android MediaPlayer, iOS, Windows UWP|
+|[onRestoreUserInterfaceForPictureInPictureStop](#onrestoreuserinterfaceforpictureinpicturestop)|iOS|
+|[onTimedMetadata](#ontimedmetadata)|Android ExoPlayer, Android MediaPlayer, iOS|
+
 
 ### Methods
-* [dismissFullscreenPlayer](#dismissfullscreenplayer)
-* [presentFullscreenPlayer](#presentfullscreenplayer)
-* [save](#save)
-* [restoreUserInterfaceForPictureInPictureStop](#restoreuserinterfaceforpictureinpicturestop)
-* [seek](#seek)
+| Name |Plateforms Support  | 
+|--|--|
+|[dismissFullscreenPlayer](#dismissfullscreenplayer)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[presentFullscreenPlayer](#presentfullscreenplayer)|Android ExoPlayer, Android MediaPlayer, iOS|
+|[save](#save)|iOS|
+|[restoreUserInterfaceForPictureInPictureStop](#restoreuserinterfaceforpictureinpicturestop)|iOS|
+|[seek](#seek)|All|
+
 
 ### Configurable props
 
@@ -381,6 +429,11 @@ A Boolean value that indicates whether the player should automatically delay pla
 
 Platforms: iOS
 
+#### backBufferDurationMs
+The number of milliseconds of buffer to keep before the current position. This allows rewinding without rebuffering within that duration.
+
+Platforms: Android ExoPlayer
+
 #### bufferConfig
 Adjust the buffer settings. This prop takes an object with one or more of the properties listed below.
 
@@ -390,6 +443,9 @@ minBufferMs | number | The default minimum duration of media that the player wil
 maxBufferMs | number | The default maximum duration of media that the player will attempt to buffer, in milliseconds.
 bufferForPlaybackMs | number | The default duration of media that must be buffered for playback to start or resume following a user action such as a seek, in milliseconds.
 bufferForPlaybackAfterRebufferMs | number | The default duration of media that must be buffered for playback to resume after a rebuffer, in milliseconds. A rebuffer is defined to be caused by buffer depletion rather than a user action.
+maxHeapAllocationPercent | number | The percentage of available heap that the video can use to buffer, between 0 and 1
+minBackBufferMemoryReservePercent | number | The percentage of available app memory at which during startup the back buffer will be disabled, between 0 and 1
+minBufferMemoryReservePercent | number | The percentage of available app memory to keep in reserve that prevents buffer from using it, between 0 and 1
 
 This prop should only be set when you are setting the source, changing it after the media is loaded will cause it to be reloaded.
 
@@ -412,10 +468,13 @@ Platforms: Android ExoPlayer, iOS
 
 #### controls
 Determines whether to show player controls.
-* ** false (default)** - Don't show player controls
+* **false (default)** - Don't show player controls
 * **true** - Show player controls
 
 Note on iOS, controls are always shown when in fullscreen mode.
+
+### contentStartTime
+The start time in ms for SSAI content. This determines at what time to load the video info like resolutions. Use this only when you have SSAI stream where ads resolution is not the same as content resolution.
 
 For Android MediaPlayer, you will need to build your own controls or use a package like [react-native-video-controls](https://github.com/itsnubix/react-native-video-controls) or [react-native-video-player](https://github.com/cornedor/react-native-video-player).
 
@@ -427,6 +486,13 @@ Platforms: Android ExoPlayer, iOS, react-native-dom
 Determines whether video audio should override background music/audio in Android devices.
 * ** false (default)** - Override background audio/music
 * **true** - Let background audio/music from other apps play
+
+Platforms: Android Exoplayer
+
+#### disableDisconnectError
+Determines if the player needs to throw an error when connection is lost or not
+* **false (default)** - Player will throw an error when connection is lost
+* **true** - Player will keep trying to buffer when network connect is lost
 
 Platforms: Android Exoplayer
 
@@ -906,6 +972,18 @@ useTextureView can only be set at same time you're setting the source.
 
 Platforms: Android ExoPlayer
 
+#### useSecureView
+Force the output to a SurfaceView and enables the secure surface.
+
+This will override useTextureView flag.
+
+SurfaceView is is the only one that can be labeled as secure.
+
+* **true** - Use security
+* **false (default)** - Do not use security
+
+Platforms: Android ExoPlayer
+
 #### volume
 Adjust the volume.
 * **1.0 (default)** - Play at full volume
@@ -913,6 +991,18 @@ Adjust the volume.
 * **Other values** - Reduce volume
 
 Platforms: all
+
+#### localSourceEncryptionKeyScheme
+Set the url scheme for stream encryption key for local assets
+
+Type: String
+
+Example:
+```
+localSourceEncryptionKeyScheme="my-offline-key"
+```
+
+Platforms: iOS
 
 
 ### Event props
@@ -943,6 +1033,24 @@ Example:
 Note: On Android ExoPlayer, you must set the [reportBandwidth](#reportbandwidth) prop to enable this event. This is due to the high volume of events generated.
 
 Platforms: Android ExoPlayer
+
+#### onBuffer
+Callback function that is called when the player buffers.
+
+Payload:
+
+Property | Type | Description
+--- | --- | ---
+isBuffering | boolean | Boolean indicating whether buffering is active
+
+Example:
+```
+{
+  isBuffering: true
+}
+```
+
+Platforms: Android ExoPlayer, iOS
 
 #### onEnd
 Callback function that is called when the player reaches the end of the media.
@@ -1068,6 +1176,24 @@ Example:
 
 Platforms: all
 
+#### onPlaybackStateChanged
+Callback function that is called when the playback state changes.
+
+Payload:
+
+Property | Description
+--- | ---
+isPlaying | boolean | Boolean indicating if the media is playing or not
+
+Example:
+```
+{
+  isPlaying: true,
+}
+```
+
+Platforms: Android ExoPlayer
+
 #### onReadyForDisplay
 Callback function that is called when the first video frame is ready for display. This is when the poster is removed.
 
@@ -1113,7 +1239,7 @@ Platforms: all
 
 
 #### onProgress
-Callback function that is called every progressUpdateInterval seconds with info about which position the media is currently playing.
+Callback function that is called every progressUpdateInterval milliseconds with info about which position the media is currently playing.
 
 Property | Type | Description
 --- | --- | ---
@@ -1374,6 +1500,16 @@ To enable audio to play in background on iOS the audio session needs to be set t
 
 ## Updating
 
+### Version 6.0.0
+
+#### iOS
+
+In your project Podfile add support for static dependency linking. This is required to support the new Promises subdependency in the iOS swift conversion.
+
+Add `use_frameworks! :linkage => :static` just under `platform :ios` in your ios project Podfile.
+
+[See the example ios project for reference](examples/basic/ios/Podfile#L5)
+
 ### Version 5.0.0
 
 Probably you want to update your gradle version:
@@ -1470,8 +1606,16 @@ allprojects {
     }
 }
 ```
-
 If you encounter an error `Could not find com.android.support:support-annotations:27.0.0.` reinstall your Android Support Repository.
+ 
+## Black Screen on Release build (Android)
+If your video work on Debug mode, but on Release you see only black screen, please, check the link to your video. If you use 'http' protocol there, you will need to add next string to your AndroidManifest.xml file.
+```
+<application
+ ...
+ android:usesCleartextTraffic="true"
+>
+```
 
 ## TODOS
 
@@ -1480,9 +1624,14 @@ If you encounter an error `Could not find com.android.support:support-annotation
 - [ ] Bring API closer to HTML5 `<Video>` [reference](http://devdocs.io/html/element/video)
 
 [1]: https://github.com/brentvatne/react-native-login/blob/56c47a5d1e23781e86e19b27e10427fd6391f666/App/Screens/UserInfoScreen.js#L32-L35
-[2]: https://github.com/react-native-community/react-native-video/tree/master/example
+[2]: https://github.com/react-native-video/react-native-video/tree/master/examples
 [3]: https://developer.apple.com/library/ios/qa/qa1668/_index.html
+[4]: https://github.com/react-native-video/react-native-video/workflows/ci/badge.svg
+[5]: https://github.com/react-native-video/react-native-video/actions
 
----
+## Useful resources
 
-**MIT Licensed**
+- [Documentation](https://github.com/react-native-video/react-native-video/blob/master/API.md)
+- [Changelog](https://github.com/react-native-video/react-native-video/blob/master/CHANGELOG.md)
+
+**react-native-video** was originally created by [Brent Vatne](https://github.com/brentvatne)
